@@ -21,28 +21,24 @@ def is_prime(n:int) -> bool:
 def prime_factorization(n: int) -> list[int]:
     if n <= 1:
         return []
-    primes_list = generate_primes(n)  
+    primes_list = generate_primes(math.isqrt(n))  
     factors_list = []
-    break_outer = False
-    while n > 1 and break_outer == False:
-        for prime in primes_list:
-            if prime > math.sqrt(n):
-                factors_list.append(n)
-                break_outer = True
-                break
-            while True:
-                if n % prime == 0:
-                    n //= prime
-                    factors_list.append(prime)
-                else:
-                    break
+    append = factors_list.append
+    for prime in primes_list:
+        if n == 1: 
+            break
+        elif prime ** 2 > n:
+            break
+        while n % prime == 0:
+            n //= prime
+            append(prime)
+    if n > 1:
+        append(n)
             
-    
     return factors_list
     
-
 def factor_count(factors: list[int]) -> dict[int, int]:
-    counts = Counter(factors)
+    counts = dict(Counter(sorted(factors)))
     return counts
 
 def format_factors(factors: dict[int, int]) -> str|None:
@@ -100,6 +96,65 @@ def generate_primes(limit):
          if flags[value]:
             primes_list.append(value)
     return primes_list
+
+def coprime(a:int, b:int) -> bool:
+    '''Uses the gcd tp calculate if 2 ints are coprime.
+    
+    Args:
+        a: int provided by the user.
+        b: int provided by the user.
+        
+    Returns:
+        bool: If the 2 ints are coprime or not.
+    '''
+
+    if gcd(a,b) == 1:
+        return True
+    else:   
+        return False
+
+    def eulers_totient(n:int) -> int:
+        '''In tandem with the coprime function, returns the totient *(list of coprime
+        integers from 1 to n) of a given int.
+        
+        Args:
+            n: Int provided by the user.
+            
+        Returns:
+            An int which is the count of coprimes between 1 and n.
+            
+        Raises:
+            ValueError: If n is negative'''
+
+        # two formulas: one for prime numbers, one for composite numbers
+
+        if n < 0:
+            raise ValueError
+        coprimes_list=[]
+        if is_prime(n) == True:
+            coprimes_list.extend(range(2,n)) # n acts like n-1 in the usual formula because of the range cutoff
+        else:
+            for i in range(2,n): # 1 is not coprime, n acts like n-1
+                if coprime(i, n) == True:
+                    coprimes_list.append(i)
+            return len(coprimes_list)
+
+        def modulo(n: int, modulus: int) -> int:
+
+            if modulus < 0:
+                raise ValueError
+            else:
+                return n % modulus
+
+        def modulus_exponent(n: str, modulus: int) -> int:
+            if modulus < 0:
+                raise ValueError
+            else:
+                if "^" in n:
+                    base, power = n.split("^")
+                    return pow(int(base),int(power),modulus)
+                else:
+                    raise ValueError
             
             
 
