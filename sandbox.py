@@ -1,3 +1,3 @@
 import project
 
-print(project.prime_factorization(50))
+print(project.modulo_exponent("2 ^ 5", 5))

@@ -8,13 +8,12 @@ def is_prime(n: int) -> bool:
     if n <= 1:
         return False
     elif n % 2 == 0:
-        if n != 2:
-            return False
-        else:
+        if n == 2:
             return True
+        else:
+            return False
     else:
-        root = int(math.sqrt(n))
-        for i in range(2, root + 1):
+        for i in range(3, math.isqrt(n), 2):
             if n % i == 0:
                 return False
         return True
@@ -50,14 +49,10 @@ def format_factors(factors: dict[int, int]) -> str | None:
     formatted = ""
     for index, (prime, power) in enumerate(factors.items()):
         if index == factor_length - 1:
-            formatted.join(str(prime))
-            if power != 1:
-               formatted.join(str(prime)).join("^").join(str(power))
+            # HUGE LOGIC REWORK TBD, current O(factors^2), should reduce down to something like O(factors) using .join()
         else:
-            if power == 1:
-                formatted.join(str(prime)).join("x")
-            else:
-                formatted.join(str(prime)).join("^").join(str(power)).join("x")
+            pass
+            # read above
     if formatted == "":
         return None
     return formatted
@@ -158,7 +153,7 @@ def modulo(n: int, modulus: int) -> int:
         return n % modulus
 
 
-def modulus_exponent(n: str, modulus: int) -> int:
+def modulo_exponent(n: str, modulus: int) -> int:
     if modulus < 0:
         raise ValueError
     else:
@@ -166,7 +161,7 @@ def modulus_exponent(n: str, modulus: int) -> int:
             base, power = n.split("^")
             return pow(int(base), int(power), modulus)
         else:
-            raise ValueError
+            raise ValueError("Wrong function call, use modulo")
 
 
 def main():
