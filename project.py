@@ -45,17 +45,15 @@ def factor_count(factors: list[int]) -> dict[int, int]:
 
 
 def format_factors(factors: dict[int, int]) -> str | None:
-    factor_length = len(factors)
-    formatted = ""
-    for index, (prime, power) in enumerate(factors.items()):
-        if index == factor_length - 1:
-            # HUGE LOGIC REWORK TBD, current O(factors^2), should reduce down to something like O(factors) using .join()
+    formatted = []
+    for prime, power in factors.items():
+        if power == 1:
+            formatted.append(str(prime))
         else:
-            pass
-            # read above
-    if formatted == "":
+            formatted.append(f"{prime}^{power}")
+    if not formatted: # checks for falsiness
         return None
-    return formatted
+    return " * ".join(formatted)
 
 
 def gcd(a: int, b: int) -> int:
