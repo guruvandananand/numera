@@ -1,5 +1,5 @@
-import math
 from collections import Counter
+from math import isqrt  # called with just isqrt(), math. not needed
 
 
 def is_prime(n: int) -> bool:
@@ -8,27 +8,24 @@ def is_prime(n: int) -> bool:
     if n <= 1:
         return False
     elif n % 2 == 0:
-        if n == 2:
-            return True
-        else:
-            return False
+        return n == 2
     else:
-        for i in range(3, math.isqrt(n), 2):
+        for i in range(3, isqrt(n)+1, 2):
             if n % i == 0:
                 return False
         return True
 
 
 def prime_factorization(n: int) -> list[int]:
-    if n <= 1:
+    if 0 <= n <= 1:
         return []
-    primes_list = generate_primes(math.isqrt(n))
+    if n < 0:
+        raise ValueError("Negative inputs not allowed!")
+    primes_list = generate_primes(isqrt(n))
     factors_list = []
     append = factors_list.append
     for prime in primes_list:
-        if n == 1:
-            break
-        elif prime**2 > n:
+        if n == 1 or prime**2 > n:
             break
         while n % prime == 0:
             n //= prime
@@ -47,7 +44,9 @@ def factor_count(factors: list[int]) -> dict[int, int]:
 def format_factors(factors: dict[int, int]) -> str | None:
     formatted = []
     for prime, power in factors.items():
-        if power == 1:
+        if power == 0:
+            continue
+        elif power == 1:
             formatted.append(str(prime))
         else:
             formatted.append(f"{prime}^{power}")
@@ -74,12 +73,12 @@ def lcm(a: int, b: int) -> int:
     return (a * b) // gcd(a, b)
 
 
-def generate_primes(limit):
+def generate_primes(limit:int) -> list[int]:
     # uses Sieve of Eratosthenes
-    if limit == 0 or limit == 1:
+    if 0 <= limit <= 1:
         return []
     if limit < 0:
-        raise ValueError
+        raise ValueError("Negative input not allowed!")
     flags = [True] * (limit + 1)
     flags[0], flags[1] = False, False
     for i in range(2, limit + 1):
@@ -106,15 +105,14 @@ def coprime(a: int, b: int) -> bool:
     Returns:
         bool: If the 2 ints are coprime or not.
     """
-
-    if gcd(a, b) == 1:
-        return True
+    if b != 0:
+        return gcd(a,b) == 1
     else:
-        return False
+        raise ValueError("b cannot be 0")
 
 
-def eulers_totient(n: int) -> int:
-    """In tandem with the coprime function, returns the totient *(list of coprime
+def eulers_totient(n: int) -> int | None:
+    """In tandem with the coprime function, returns the totient (number of coprime
         integers from 1 to n) of a given int.
 
     Args:
@@ -124,35 +122,32 @@ def eulers_totient(n: int) -> int:
         An int which is the count of coprimes between 1 and n.
 
     Raises:
-        ValueError: If n is negative"""
+        ValueError: If n is negative or zero"""
 
     # two formulas: one for prime numbers, one for composite numbers
 
-    if n < 0:
+    if n == 1:
+        return 1
+    if n < 1:
         raise ValueError
-    coprimes_list = []
-    if is_prime(n) == True:
-        coprimes_list.extend(
-            range(1, n)
-        )  # n acts like n-1 in the usual formula because of the range cutoff
-        return len(coprimes_list)
+    if is_prime(n) is True:
+        return n - 1
     else:
-        for i in range(1, n):  # n acts like n-1
-            if coprime(i, n) == True:
-                coprimes_list.append(i)
-        return len(coprimes_list)   
-
+        result: int = n
+        for prime in set(prime_factorization(n)):
+            result = result - result//prime
+        return result
 
 def modulo(n: int, modulus: int) -> int:
 
-    if modulus < 0:
+    if modulus <= 0:
         raise ValueError
     else:
         return n % modulus
 
 
 def modulo_exponent(n: str, modulus: int) -> int:
-    if modulus < 0:
+    if modulus <= 0:
         raise ValueError
     else:
         if "^" in n:
