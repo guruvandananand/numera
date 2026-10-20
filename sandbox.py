@@ -2,4 +2,4 @@ from icecream import ic
 
 import project
 
-ic(project.eulers_totient(15))
+ic(project.digit_sum(155))

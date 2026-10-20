@@ -157,6 +157,32 @@ def modulo_exponent(n: str, modulus: int) -> int:
             raise ValueError("Wrong function call, use modulo")
 
 
+def divisor_count(n: int) -> int:
+    if n <= 0:
+        raise ValueError("Input cannot be negative!")
+    factor_powers = factor_count(prime_factorization(n)).values() # n (int) becomes list, then a dict
+    result = 1 
+    for number in factor_powers:
+        result *= number+1
+    return result
+
+def is_perfect_square(n: int) -> bool:
+    if n < 0:
+        raise ValueError
+    return (isqrt(n))**2 == n
+
+def digit_sum(n: int) -> int:
+    accumulator = []
+    for digit in str(n):
+        accumulator.append(int(digit))
+    return sum(accumulator)
+
+def divisor_sum(n: int) -> int | None : #remove NONE IMMEDIATELY, THIS WAS DONE TO PREVENT ERROR! Unless None is a valid return type
+    accumulator = []
+    for prime, power in factor_count(prime_factorization(n)).items():
+        ...
+
+
 def main():
     pass
     # terminal selection here, do this LAST
