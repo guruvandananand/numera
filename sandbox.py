@@ -2,4 +2,4 @@ from icecream import ic
 
 import project
 
-ic(project.digit_sum(155))
+ic(project.divisor_sum(1999))

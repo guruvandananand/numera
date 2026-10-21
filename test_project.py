@@ -14,6 +14,10 @@ COPRIME_DATA: list = [(3,5,True),(2,4,False),(0,1,True)]
 EULERS_TOTIENT_DATA: list = [(5, 4),(1,1), (2, 1), (9, 6), (15,8)]
 MODULO_DATA: list = [(5, 3, 2),(9, 2, 1),(0, 1, 0), (2, 2, 0)]
 MODULO_EXPONENT_DATA: list = [("2^3", 2, 0),("5^5", 3, 2),("0^8", 1, 0)]
+DIVISOR_COUNT_DATA: list = [(5, 2),(15, 4),(9, 3), (1, 1)]
+PERFECT_SQUARE_DATA: list = [(25, True),(15, False),(9, True), (1, True), (1000, False)]
+DIGIT_SUM_DATA: list = [(5832, 18),(155, 11),(1, 1), (18, 9)]
+DIVISOR_SUM_DATA: list = [(5832, 16395),(155, 192),(15, 24), (1, 1)]
 
 @pytest.mark.parametrize("number, expected", PRIME_DATA)
 def test_is_prime(number: int, expected: bool):
@@ -69,7 +73,6 @@ def test_modulo(number: int, modulus: int, expected: int):
         project.modulo(10,-5)
 
 
-
 @pytest.mark.parametrize("number, modulus, expected", MODULO_EXPONENT_DATA)
 def test_modulo_exponent(number: str, modulus: int, expected: int):
     assert project.modulo_exponent(number, modulus) == expected
@@ -77,4 +80,31 @@ def test_modulo_exponent(number: str, modulus: int, expected: int):
         project.modulo_exponent("5^5", 0)
         project.modulo_exponent("3^3", -5)
 
+@pytest.mark.parametrize("number, expected", DIVISOR_COUNT_DATA)
+def test_divisor_count(number: int, expected: int):
+    assert project.divisor_count(number) == expected
+    with pytest.raises(ValueError):
+        project.divisor_count(0)
+        project.divisor_count(-5)
 
+@pytest.mark.parametrize("number, expected", PERFECT_SQUARE_DATA)
+def test_is_perfect_square(number: int, expected: int):
+    assert project.is_perfect_square(number) == expected
+    with pytest.raises(ValueError):
+        project.is_perfect_square(0)
+        project.is_perfect_square(-123)
+
+@pytest.mark.parametrize("number, expected", DIGIT_SUM_DATA)
+def test_digit_sum(number: int, expected: int):
+    assert project.digit_sum(number) == expected
+    with pytest.raises(ValueError):
+        project.digit_sum(0)
+        project.digit_sum(-19)
+
+
+@pytest.mark.parametrize("number, expected", DIVISOR_SUM_DATA)
+def test_divisor_sum(number: int, expected: int):
+    assert project.divisor_sum(number) == expected
+    with pytest.raises(ValueError):
+        project.divisor_sum(0)
+        project.divisor_sum(-19)

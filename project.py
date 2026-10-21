@@ -1,5 +1,5 @@
 from collections import Counter
-from math import isqrt  # called with just isqrt(), math. not needed
+from math import isqrt, prod  # called with just isqrt(), math. not needed
 
 
 def is_prime(n: int) -> bool:
@@ -177,11 +177,15 @@ def digit_sum(n: int) -> int:
         accumulator.append(int(digit))
     return sum(accumulator)
 
-def divisor_sum(n: int) -> int | None : #remove NONE IMMEDIATELY, THIS WAS DONE TO PREVENT ERROR! Unless None is a valid return type
+def divisor_sum(n: int) -> int:
+    if n <= 0:
+        raise ValueError("N must be a positive integer!")
     accumulator = []
+    if is_prime(n):
+        return n + 1
     for prime, power in factor_count(prime_factorization(n)).items():
-        ...
-
+        accumulator.append(sum(prime**number for number in range(power+1)))
+    return prod(accumulator)
 
 def main():
     pass
