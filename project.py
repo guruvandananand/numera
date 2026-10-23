@@ -2,6 +2,7 @@ from collections import Counter
 from math import isqrt, prod  # called with just isqrt(), math. not needed
 from rich.console import Console
 from rich.table import Table
+from rich import print
 
 
 def is_prime(n: int) -> bool:
@@ -191,10 +192,11 @@ def divisor_sum(n: int) -> int:
 
 def main():
     console = Console()
+    print()
     table = Table(title="Welcome to Numera! Select your operation from the list below.", show_lines=True)
     # 1. Add Columns (with optional styles)
-    table.add_column("Number")
-    table.add_column("Operation")
+    table.add_column("Number", style="green", header_style="red")
+    table.add_column("Operation", style="blue", header_style="red")
     table.add_row("1.", "Prime Testing")
     table.add_row("2.", "Prime Factorization")
     table.add_row("3.", "GCD")
@@ -214,56 +216,72 @@ def main():
         choice = input("Select operation here, enter 0 to exit: ").strip().replace(".","")
         match choice:
             case "1":
+                print("[red]PRIME TESTING[/red]")
                 user = int(input("Enter number: "))
                 print(is_prime(user))
             case "2":
+                print("[red]PRIME FACTORIZATION[/red]")
                 user = int(input("Enter number: "))
                 print("Prime factors: ", end="")
                 print(*prime_factorization(user), sep=", ")
             case "3":
+                print("[red]GCD[/red]")
                 first = int(input("Enter number 1: "))
                 second = int(input("Enter number 2: "))
                 print(gcd(first, second))
             case "4":
+                print("[red]LCM[/red]")
                 first = int(input("Enter number 1: "))
                 second = int(input("Enter number 2: "))
                 print(lcm(first, second))
             case "5":
+                print("[red]GENERATE PRIMES[/red]")
                 number = int(input("Enter number: "))
                 print(generate_primes(number))
             case "6":
+                print("[red]COPRIME CHECKER[/red]")
                 first = int(input("Enter number 1: "))
                 second = int(input("Enter number 2: "))
                 print(coprime(first, second))
             case "7":
+                print("[red]EULER'S TOTIENT[/red]")
                 number = int(input("Enter number: "))
                 print(eulers_totient(number))
             case "8":
+                print("[red]MODULAR ARITHMETIC[/red]")
                 number = int(input("What's the dividend?: "))
                 modulus = int(input("What's the divisor/modulus?: "))
                 print(modulo(number, modulus))
             case "9":
+                print("[red]MOD ARITHMETIC W/ EXPONENT[/red]")
                 number = input("What's the dividend? (must include ^): ") # must be str
                 modulus = int(input("What's the divisor/modulus?: "))
                 print(modulo_exponent(number, modulus))
             case "10":
+                print("[red]DIVISOR COUNT[/red]")
                 number = int(input("Enter number: "))
                 print(divisor_count(number))
             case "11":
+                print("[red]SQUARE TESTING[/red]")
                 number = int(input("Perfect Square to check: "))
                 print(is_perfect_square(number))
             case "12":
+                print("[red]DIGIT SUM[/red]")
                 number = int(input("Enter number: "))
                 print(digit_sum(number))
             case "13":
+                print("[red]DIVISOR SUM[/red]")
                 number = int(input("Enter number: "))
                 print(divisor_sum(number))
             case "0":
+                print("[orange]EXIT[/orange]")
                 break
             case _:
-                print("Sorry, input not recognized.")
+                print("[yellow]Sorry, input not recognized[/yellow]")
 
-
+def checker(number, *args):
+    ...
+    #WIP, use all() and isinstance()
 
 if __name__ == "__main__":
     main()
