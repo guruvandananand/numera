@@ -217,18 +217,33 @@ def main():
         match choice:
             case "1":
                 print("[red]PRIME TESTING[/red]")
-                user = int(input("Enter number: "))
-                print(is_prime(user))
+                while True:
+                    if x:= checker(input("Enter number: ")):
+                        print(is_prime(*x))
+                        break
+                    else:
+                        print("Invalid number, please use an integer(s)!")
             case "2":
                 print("[red]PRIME FACTORIZATION[/red]")
-                user = int(input("Enter number: "))
-                print("Prime factors: ", end="")
-                print(*prime_factorization(user), sep=", ")
+                while True:
+                    if x:= checker(input("Enter number: ")):
+                        print("Prime factors: ", end="")
+                        print(*prime_factorization(*x), sep=", ")
+                        break
+                    else:
+                        print("Invalid number, please use an integer(s)!")
             case "3":
                 print("[red]GCD[/red]")
-                first = int(input("Enter number 1: "))
-                second = int(input("Enter number 2: "))
-                print(gcd(first, second))
+                while True:
+                    if x := checker(input("Enter number 1: ")):
+                        if y := checker(input("Enter number 2: ")):
+                            print(gcd(x[0], y[0]))
+                            break
+                        else:
+                            print("Invalid number, please use an integer!")
+                    else:
+                        print("Invalid number, please use an integer!")
+                       
             case "4":
                 print("[red]LCM[/red]")
                 first = int(input("Enter number 1: "))
@@ -279,8 +294,12 @@ def main():
             case _:
                 print("[yellow]Sorry, input not recognized[/yellow]")
 
-def checker(number, *args):
-    ...
+def checker(*numbers: str):
+    try: 
+        intnumbers = [int(number) for number in numbers]
+        return intnumbers
+    except (ValueError, TypeError):
+        return False
     #WIP, use all() and isinstance()
 
 if __name__ == "__main__":
