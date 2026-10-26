@@ -492,7 +492,6 @@ def checker(*numbers: str):
         return intnumbers
     except (ValueError, TypeError):
         return False
-    #WIP, use all() and isinstance()
 
 if __name__ == "__main__":
     main()
