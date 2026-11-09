@@ -67,7 +67,6 @@ def factor_count(factors: list[int]) -> dict[int, int]:
 
     Returns:
         A dict with a key-value pair of 'prime:power'.
-o
 
     '''
     counts = dict(Counter(factors))
@@ -175,11 +174,18 @@ def coprime(a: int, b: int) -> bool:
 
     Returns:
         bool: If the 2 ints are coprime or not.
+    
+    Raises:
+        ValueError: If a or b are negative.
     """
-    if b != 0:
+    if a > 0 and b > 0:
         return gcd(a,b) == 1
+    elif b == 0:
+        return a == 1 or a == -1 
+    elif a == 0:     
+        return b == 1 or b == -1    
     else:
-        raise ValueError("b cannot be 0")
+        raise ValueError("Second integer must be positive or zero!")
 
 
 def eulers_totient(n: int) -> int:
@@ -240,7 +246,7 @@ def modulo_exponent(n: str, modulus: int) -> int:
         An int which is the remainder when n is divided by modulus.
 
     Raises:
-        ValueError: If modulus is negative or zero
+        ValueError: If modulus is negative or zero.
     '''
     if modulus <= 0:
         raise ValueError
@@ -265,7 +271,7 @@ def divisor_count(n: int) -> int:
         ValueError: If n is negative or zero
     '''
     if n <= 0:
-        raise ValueError("Input cannot be negative!")
+        raise ValueError("Input must be a positive integer!")
     factor_powers = factor_count(prime_factorization(n)).values() # n (int) becomes list, then a dict
     result = 1 
     for number in factor_powers:
@@ -425,24 +431,32 @@ def main():
                 while True:
                     if x := checker(input("What's the dividend?: ")):
                         if y := checker(input("What's the modulus?: ")):
-                            if y[0] != 0:
+                            if not y[0] <= 0:
                                 print(modulo(x[0], y[0]))    
                             else:
-                                print("Modulus cannot be 0!") 
+                                print("Modulus cannot be less than or equal to 0!") 
                             break
                         else:
                             print("Invalid numbers, please use integers!")
                     else:
                         print("Invalid numbers, please use integers!")
             case "9":
+                import re
                 print("[red]MOD ARITHMETIC W/ EXPONENT[/red]")
                 while True:
-                    if x := input("What's the dividend? (must include '^''): "):
-                        if y := checker(input("What's the modulus?: ")):
-                            if y[0] != 0:
-                                print(modulo_exponent(x, y[0]))
+                    if x := input("What's the dividend? (must include '^'): "):
+                        if y := checker(input("What's the modulus (divisor)?: ")):
+                            good_input = bool(re.search(r"^\d+\^\d+$", x))
+                            if not y[0] <= 0 and x.count("^") == 1 and good_input:
+                                if x.count("^") == 1:
+                                    if good_input:
+                                        print(modulo_exponent(x, y[0]))
+                                    else:
+                                        print("Your input must be in the exact form 'digit^digit'!")
+                                else:
+                                    print("Invalid input, please use an integer containing only one '^'!")
                             else:
-                                print("Modulus cannot be 0!") 
+                                print("Modulus cannot be less than or equal to 0!")
                             break
                         else:
                             print("Invalid numbers, please use integers!")
@@ -452,8 +466,11 @@ def main():
                 print("[red]DIVISOR COUNT[/red]")
                 while True:
                     if x:= checker(input("Enter number: ")):
-                        print(divisor_count(*x))
-                        break
+                        if x[0] > 0:
+                            print(divisor_count(*x))
+                            break
+                        else:
+                            print("Number must be greater than 0!")
                     else:
                         print("Invalid number, please use an integer!")
             case "11":
@@ -486,12 +503,12 @@ def main():
             case _:
                 print("[yellow]Sorry, input not recognized[/yellow]")
 
-def checker(*numbers: str):
+def checker(*numbers: str) -> list[int] | None:
     try: 
-        intnumbers = [int(number) for number in numbers]
+        intnumbers: list[int] = [int(number) for number in numbers]
         return intnumbers
     except (ValueError, TypeError):
-        return False
+        return None
 
 if __name__ == "__main__":
     main()
