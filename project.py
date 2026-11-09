@@ -6,7 +6,7 @@ from rich import print
 
 
 def is_prime(n: int) -> bool:
-    '''Returns a bool signifying whether an integer is prime or not.
+    """Returns a bool signifying whether an integer is prime or not.
 
     Args:
         n: Int provided by the user.
@@ -14,7 +14,7 @@ def is_prime(n: int) -> bool:
     Returns:
         bool: Whether the given int is prime.
 
-    '''
+    """
     # uses sqrt(n) method for primality testing
 
     if n <= 1:
@@ -22,14 +22,14 @@ def is_prime(n: int) -> bool:
     elif n % 2 == 0:
         return n == 2
     else:
-        for i in range(3, isqrt(n)+1, 2):
+        for i in range(3, isqrt(n) + 1, 2):
             if n % i == 0:
                 return False
         return True
 
 
 def prime_factorization(n: int) -> list[int]:
-    '''Creates and returns a list of integers which contain the prime factors of a given int.
+    """Creates and returns a list of integers which contain the prime factors of a given int.
 
     Args:
         n: Int provided by the user.
@@ -38,8 +38,8 @@ def prime_factorization(n: int) -> list[int]:
         An list which is the prime factors of n.
 
     Raises:
-        ValueError: If n is negative'''
-    
+        ValueError: If n is negative"""
+
     if 0 <= n <= 1:
         return []
     if n < 0:
@@ -60,7 +60,7 @@ def prime_factorization(n: int) -> list[int]:
 
 
 def factor_count(factors: list[int]) -> dict[int, int]:
-    '''Takes a list from prime_factorization() and formats it into a dict with a key-value pair of 'prime: power'.
+    """Takes a list from prime_factorization() and formats it into a dict with a key-value pair of 'prime: power'.
 
     Args:
         factors: List provided from prime_factorization().
@@ -68,13 +68,13 @@ def factor_count(factors: list[int]) -> dict[int, int]:
     Returns:
         A dict with a key-value pair of 'prime:power'.
 
-    '''
+    """
     counts = dict(Counter(factors))
     return counts
 
 
 def format_factors(factors: dict[int, int]) -> str | None:
-    '''Takes a dict from factor_count and formats the factors into a str.
+    """Takes a dict from factor_count and formats the factors into a str.
 
     Args:
         factors: A dict from factor_count().
@@ -82,7 +82,7 @@ def format_factors(factors: dict[int, int]) -> str | None:
     Returns:
         A str formatting the factors.
 
-    '''
+    """
     formatted = []
     for prime, power in factors.items():
         if power == 0:
@@ -91,13 +91,13 @@ def format_factors(factors: dict[int, int]) -> str | None:
             formatted.append(str(prime))
         else:
             formatted.append(f"{prime}^{power}")
-    if not formatted: # checks for falsiness
+    if not formatted:  # checks for falsiness
         return None
     return " * ".join(formatted)
 
 
 def gcd(a: int, b: int) -> int:
-    '''Returns the greatest common divisor (GCD) of two integers.
+    """Returns the greatest common divisor (GCD) of two integers.
 
     Args:
         a: Int provided by the user.
@@ -105,7 +105,7 @@ def gcd(a: int, b: int) -> int:
 
     Returns:
         An int which is the gcd of a and b.
-    '''
+    """
     # Uses Euclidean Algorithm
     a, b = abs(a), abs(b)
 
@@ -116,7 +116,7 @@ def gcd(a: int, b: int) -> int:
 
 
 def lcm(a: int, b: int) -> int:
-    '''Returns the least common multiple (LCM) of two integers.
+    """Returns the least common multiple (LCM) of two integers.
 
     Args:
         a: Int provided by the user.
@@ -124,7 +124,7 @@ def lcm(a: int, b: int) -> int:
     Returns:
         An int which is the lcm of a and b.
 
-    '''
+    """
     # uses LCM formula --> lcm(a,b) == (a*b)/gcd(a,b)
     a, b = abs(a), abs(b)
     if a == 0 or b == 0:
@@ -132,8 +132,8 @@ def lcm(a: int, b: int) -> int:
     return (a * b) // gcd(a, b)
 
 
-def generate_primes(limit:int) -> list[int]:
-    '''Uses the Sieve of Eratosthenes to calculuate the list of primes up to a given limit.
+def generate_primes(limit: int) -> list[int]:
+    """Uses the Sieve of Eratosthenes to calculuate the list of primes up to a given limit.
 
     Args:
         limit: Int provided by the user.
@@ -143,7 +143,7 @@ def generate_primes(limit:int) -> list[int]:
 
     Raises:
         ValueError: If n is negative
-    '''
+    """
     # uses Sieve of Eratosthenes
     if 0 <= limit <= 1:
         return []
@@ -174,16 +174,16 @@ def coprime(a: int, b: int) -> bool:
 
     Returns:
         bool: If the 2 ints are coprime or not.
-    
+
     Raises:
         ValueError: If a or b are negative.
     """
     if a > 0 and b > 0:
-        return gcd(a,b) == 1
+        return gcd(a, b) == 1
     elif b == 0:
-        return a == 1 or a == -1 
-    elif a == 0:     
-        return b == 1 or b == -1    
+        return a == 1 or a == -1
+    elif a == 0:
+        return b == 1 or b == -1
     else:
         raise ValueError("Second integer must be positive or zero!")
 
@@ -212,11 +212,12 @@ def eulers_totient(n: int) -> int:
     else:
         result: int = n
         for prime in set(prime_factorization(n)):
-            result = result - result//prime
+            result = result - result // prime
         return result
 
+
 def modulo(n: int, modulus: int) -> int:
-    '''Uses the built in modulus operator ('%') to calculate a modular operation between a dividend and modulus.
+    """Uses the built in modulus operator ('%') to calculate a modular operation between a dividend and modulus.
 
     Args:
         n: Int provided by the user.
@@ -227,7 +228,7 @@ def modulo(n: int, modulus: int) -> int:
 
     Raises:
         ValueError: If modulus is negative or zero
-    '''
+    """
 
     if modulus <= 0:
         raise ValueError
@@ -236,7 +237,7 @@ def modulo(n: int, modulus: int) -> int:
 
 
 def modulo_exponent(n: str, modulus: int) -> int:
-    '''Highly similar to modulo(); instead of taking n as an int, it takes n as a str, and n must contain '^'.
+    """Highly similar to modulo(); instead of taking n as an int, it takes n as a str, and n must contain '^'.
 
     Args:
         n: Str provided by the user, must contain '^'
@@ -247,7 +248,7 @@ def modulo_exponent(n: str, modulus: int) -> int:
 
     Raises:
         ValueError: If modulus is negative or zero.
-    '''
+    """
     if modulus <= 0:
         raise ValueError
     else:
@@ -259,7 +260,7 @@ def modulo_exponent(n: str, modulus: int) -> int:
 
 
 def divisor_count(n: int) -> int:
-    '''Returns the number of divisors a given int has.
+    """Returns the number of divisors a given int has.
 
     Args:
         n: Int provided by the user.
@@ -269,17 +270,20 @@ def divisor_count(n: int) -> int:
 
     Raises:
         ValueError: If n is negative or zero
-    '''
+    """
     if n <= 0:
         raise ValueError("Input must be a positive integer!")
-    factor_powers = factor_count(prime_factorization(n)).values() # n (int) becomes list, then a dict
-    result = 1 
+    factor_powers = factor_count(
+        prime_factorization(n)
+    ).values()  # n (int) becomes list, then a dict
+    result = 1
     for number in factor_powers:
-        result *= number+1
+        result *= number + 1
     return result
 
+
 def is_perfect_square(n: int) -> bool:
-    '''Checks whether a given int is a perfect square.
+    """Checks whether a given int is a perfect square.
 
     Args:
         n: Int provided by the user.
@@ -289,27 +293,29 @@ def is_perfect_square(n: int) -> bool:
 
     Raises:
         ValueError: If n is negative.
-    '''
+    """
     if n < 0:
         raise ValueError
-    return (isqrt(n))**2 == n
+    return (isqrt(n)) ** 2 == n
+
 
 def digit_sum(n: int) -> int:
-    '''Returns the sum of all the digits of a given int.
+    """Returns the sum of all the digits of a given int.
 
     Args:
         n: Int provided by the user.
 
     Returns:
         An int which is the sum of all digits within an int.
-    '''
+    """
     accumulator = []
     for digit in str(n):
         accumulator.append(int(digit))
     return sum(accumulator)
 
+
 def divisor_sum(n: int) -> int:
-    '''Returns the sum of all the divisors of a given int.
+    """Returns the sum of all the divisors of a given int.
 
     Args:
         n: Int provided by the user.
@@ -319,20 +325,24 @@ def divisor_sum(n: int) -> int:
 
     Raises:
         ValueError: If n is negative or zero
-    '''
+    """
     if n <= 0:
         raise ValueError("N must be a positive integer!")
     accumulator = []
     if is_prime(n):
         return n + 1
     for prime, power in factor_count(prime_factorization(n)).items():
-        accumulator.append(sum(prime**number for number in range(power+1)))
+        accumulator.append(sum(prime**number for number in range(power + 1)))
     return prod(accumulator)
+
 
 def main():
     console = Console()
     print()
-    table = Table(title="Welcome to Numera! Select your operation from the list below.", show_lines=True)
+    table = Table(
+        title="Welcome to Numera! Select your operation from the list below.",
+        show_lines=True,
+    )
     # 1. Add Columns (with optional styles)
     table.add_column("Number", style="green", header_style="red")
     table.add_column("Operation", style="blue", header_style="red")
@@ -352,12 +362,14 @@ def main():
     table.add_row("0.", "Exit")
     console.print(table)
     while True:
-        choice = input("Select operation here, enter 0 to exit: ").strip().replace(".","")
+        choice = (
+            input("Select operation here, enter 0 to exit: ").strip().replace(".", "")
+        )
         match choice:
             case "1":
                 print("[red]PRIME TESTING[/red]")
                 while True:
-                    if x:= checker(input("Enter number: ")):
+                    if x := checker(input("Enter number: ")):
                         print(is_prime(*x))
                         break
                     else:
@@ -365,13 +377,15 @@ def main():
             case "2":
                 print("[red]PRIME FACTORIZATION[/red]")
                 while True:
-                    if x:= checker(input("Enter number: ")):
+                    if x := checker(input("Enter number: ")):
                         print("Prime factors: ", end="")
                         prime_factorization_list = prime_factorization(x[0])
                         print((prime_factorization_list), sep=", ")
                         user = input("Do you want these numbers in a string? ")
                         if user.casefold() in ("yes", "y"):
-                            print(format_factors(factor_count(prime_factorization_list)))
+                            print(
+                                format_factors(factor_count(prime_factorization_list))
+                            )
                         break
                     else:
                         print("Invalid number, please use an integer(s)!")
@@ -386,7 +400,7 @@ def main():
                             print("Invalid number, please use an integer!")
                     else:
                         print("Invalid number, please use an integer!")
-                       
+
             case "4":
                 print("[red]LCM[/red]")
                 while True:
@@ -401,12 +415,12 @@ def main():
             case "5":
                 print("[red]GENERATE PRIMES[/red]")
                 while True:
-                    if x:= checker(input("Enter number: ")):
+                    if x := checker(input("Enter number: ")):
                         print(generate_primes(*x))
                         break
                     else:
                         print("Invalid number, please use an integer!")
-    
+
             case "6":
                 print("[red]COPRIME CHECKER[/red]")
                 while True:
@@ -421,7 +435,7 @@ def main():
             case "7":
                 print("[red]EULER'S TOTIENT[/red]")
                 while True:
-                    if x:= checker(input("Enter number: ")):
+                    if x := checker(input("Enter number: ")):
                         print(eulers_totient(*x))
                         break
                     else:
@@ -432,9 +446,9 @@ def main():
                     if x := checker(input("What's the dividend?: ")):
                         if y := checker(input("What's the modulus?: ")):
                             if not y[0] <= 0:
-                                print(modulo(x[0], y[0]))    
+                                print(modulo(x[0], y[0]))
                             else:
-                                print("Modulus cannot be less than or equal to 0!") 
+                                print("Modulus cannot be less than or equal to 0!")
                             break
                         else:
                             print("Invalid numbers, please use integers!")
@@ -442,6 +456,7 @@ def main():
                         print("Invalid numbers, please use integers!")
             case "9":
                 import re
+
                 print("[red]MOD ARITHMETIC W/ EXPONENT[/red]")
                 while True:
                     if x := input("What's the dividend? (must include '^'): "):
@@ -452,9 +467,13 @@ def main():
                                     if good_input:
                                         print(modulo_exponent(x, y[0]))
                                     else:
-                                        print("Your input must be in the exact form 'digit^digit'!")
+                                        print(
+                                            "Your input must be in the exact form 'digit^digit'!"
+                                        )
                                 else:
-                                    print("Invalid input, please use an integer containing only one '^'!")
+                                    print(
+                                        "Invalid input, please use an integer containing only one '^'!"
+                                    )
                             else:
                                 print("Modulus cannot be less than or equal to 0!")
                             break
@@ -465,7 +484,7 @@ def main():
             case "10":
                 print("[red]DIVISOR COUNT[/red]")
                 while True:
-                    if x:= checker(input("Enter number: ")):
+                    if x := checker(input("Enter number: ")):
                         if x[0] > 0:
                             print(divisor_count(*x))
                             break
@@ -476,7 +495,7 @@ def main():
             case "11":
                 print("[red]SQUARE TESTING[/red]")
                 while True:
-                    if x:= checker(input("Enter number: ")):
+                    if x := checker(input("Enter number: ")):
                         print(is_perfect_square(*x))
                         break
                     else:
@@ -484,7 +503,7 @@ def main():
             case "12":
                 print("[red]DIGIT SUM[/red]")
                 while True:
-                    if x:= checker(input("Enter number: ")):
+                    if x := checker(input("Enter number: ")):
                         print(digit_sum(abs(x[0])))
                         break
                     else:
@@ -492,7 +511,7 @@ def main():
             case "13":
                 print("[red]DIVISOR SUM[/red]")
                 while True:
-                    if x:= checker(input("Enter number: ")):
+                    if x := checker(input("Enter number: ")):
                         print(divisor_sum(*x))
                         break
                     else:
@@ -503,12 +522,14 @@ def main():
             case _:
                 print("[yellow]Sorry, input not recognized[/yellow]")
 
+
 def checker(*numbers: str) -> list[int] | None:
-    try: 
+    try:
         intnumbers: list[int] = [int(number) for number in numbers]
         return intnumbers
     except (ValueError, TypeError):
         return None
+
 
 if __name__ == "__main__":
     main()
