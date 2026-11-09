@@ -2,5 +2,6 @@
 __pycache__/
 .pytest_cache/
 .ruff_cache/
-linecounter.py
 sandbox.py
+linecounter.py
+requirements-dev.txt
