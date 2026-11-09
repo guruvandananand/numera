@@ -1,7 +1,21 @@
 # numera
-A Python-based command-line application for performing various number-theoretic operations.
-
+## 📖 Project Overview
+#### Video Demo:  <https://youtu.be/W1ODLFVTgto>
 ![Numera CLI Interface](images/numera.png)
+
+Numera is a Python-based command-line application designed to perform a variety of number-theoretic operations. It provides users with a convenient way to explore mathematical concepts through an interactive menu. The program combines several fundamental number theory algorithms into one application, making calculations such as prime factorization, modular arithmetic, and Euler's totient function easily accessible.
+
+## ⚙️ Implementation
+
+Numera uses several mathematical algorithms to perform its operations efficiently. For example, the Euclidean algorithm is used to calculate the greatest common divisor (GCD), while the Sieve of Eratosthenes generates prime numbers within a specified range. Prime factorization is used in operations such as calculating Euler's totient function and determining the number of divisors of an integer.
+
+The application also incorporates input validation to handle invalid entries and prevent unexpected behavior. Its command-line interface is built using the Rich library, which provides a formatted menu and improves readability.
+
+## 🔍 Input Validation
+
+Numera checks user input before performing calculations. Inputs are validated to ensure they meet the requirements of the selected operation. When an invalid entry is provided, the program displays an appropriate error message and allows the user to try again rather than terminating unexpectedly.
+
+
 
 ## 🌟 Features
 
