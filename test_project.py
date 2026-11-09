@@ -56,7 +56,8 @@ def test_generate_primes(limit: int, expected: list[int]):
 def test_coprime(num1: int, num2: int, expected: bool):
     assert project.coprime(num1, num2) == expected 
     with pytest.raises(ValueError):
-            project.coprime(0,0)
+            project.coprime(-5,-5)
+            project.coprime(-100, 5)
 
 @pytest.mark.parametrize("number, expected", EULERS_TOTIENT_DATA)
 def test_eulers_totient(number: int, expected: int):
